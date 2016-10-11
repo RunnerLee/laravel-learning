@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var elixir = require('laravel-elixir');
+require('laravel-elixir-compress');
 
 
 var basejs = [
@@ -11,7 +12,8 @@ var basejs = [
 
 
 elixir(function(mix) {
-    mix.copy('node_modules/bootstrap-sass/assets/fonts/bootstrap', 'public/assets/fonts/bootstrap')
+    mix
+        .copy('node_modules/bootstrap-sass/assets/fonts/bootstrap', 'public/assets/fonts/bootstrap')
         .copy('node_modules/font-awesome/fonts', 'public/assets/fonts/font-awesome')
         .sass([
             'base.scss',
@@ -22,6 +24,4 @@ elixir(function(mix) {
             'assets/js/app.js',
             'assets/css/app.css'
         ]);
-
-    elixir.config.production && mix.compress();
 });
