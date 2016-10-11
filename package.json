@@ -1,0 +1,11 @@
+{
+  "name": "blog-runnerlee",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "laravel-elixir": "^5.0.0"
+  },
+  "dependencies": {
+    "bootstrap-sass": "^3.2.0",
+    "font-awesome": "^4.1.0"
+  }
+}
