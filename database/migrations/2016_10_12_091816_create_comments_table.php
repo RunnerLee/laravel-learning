@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoriesTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,13 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned()->index();
-            $table->string('name')->index();
-            $table->string('title')->nullable()->index();
-            $table->integer('articles_count')->default(0);
-            $table->timestamp('last_article_at');
+            $table->integer('article_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->text('original_content');
+            $table->string('short_content');
+            $table->enum('is_disabled', ['yes', 'no'])->default('no');
 
             $table->softDeletes();
             $table->timestamps();
@@ -32,6 +32,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('categories');
+        Schema::drop('comments');
     }
 }
