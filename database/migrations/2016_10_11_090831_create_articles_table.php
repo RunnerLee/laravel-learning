@@ -19,13 +19,12 @@ class CreateArticlesTable extends Migration
             $table->string('title')->index();
             $table->text('original_content')->nullable();
             $table->string('short_content')->nullable();
-            $table->integer('article_count')->default(0);
+            $table->integer('comment_count')->default(0);
             $table->integer('favorite_count')->default(0);
             $table->integer('view_count')->default(0);
             $table->enum('is_disabled', ['yes', 'no'])->default('no');
-            $table->rememberToken();
-            $table->timestamps();
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 

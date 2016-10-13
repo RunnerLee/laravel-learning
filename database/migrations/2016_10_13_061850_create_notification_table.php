@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoriesTable extends Migration
+class CreateNotificationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,14 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('notification', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('from_user_id')->unsigned()->index();
             $table->integer('user_id')->unsigned()->index();
-            $table->string('name')->index();
-            $table->string('title')->nullable()->index();
-            $table->integer('articles_count')->default(0);
-            $table->timestamp('last_article_at')->nullable();
-
-            $table->softDeletes();
+            $table->integer('article_id')->unsigned()->index();
+            $table->integer('commend_id')->unsigned()->index();
+            $table->string('content')->nullable();
+            $table->string('type')->index();
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('categories');
+        Schema::drop('notification');
     }
 }

@@ -19,4 +19,12 @@ Route::get('/demo', 'HomeController@demo')->name('demo');
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+
+/**
+ * articles
+ */
+
+Route::get('/articles', [
+    'uses' => 'ArticlesController@index',
+    'name' => 'articles.index',
+]);
