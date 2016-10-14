@@ -1358,7 +1358,7 @@ $.support.pjax ? enable() : disable()
             this.initPjax();
         },
         initPjax: function() {
-            $(document).pjax('a:not(a[target="_blank])', 'body', {
+            $(document).pjax('a:not(a[target="_blank"])', 'body', {
                 timeout: 1500
             });
             $(document).on('pjax:start', function() {

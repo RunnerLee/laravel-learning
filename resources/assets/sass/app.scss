@@ -1,0 +1,30 @@
+body {
+  height: 100%;
+  font-size: 14px;
+  color: #333;
+  background-color: #fff;
+  font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+}
+
+.fa-btn {
+  margin-right: 6px;
+}
+
+.articles-index {
+  article ul {
+    padding-left: 0;
+  }
+  article ul li {
+    display: inline-block;
+    padding-right: 24px;
+  }
+  article div.short-content {
+    color: #666;
+  }
+}
+
+ul.title-toolbar {
+  li {
+    display: inline-block;
+  }
+}
