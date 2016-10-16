@@ -53,3 +53,6 @@ Route::get('/article/{id}/edit', 'ArticlesController@edit')->name('articles.edit
 Route::patch('/article/{id}', 'ArticlesController@update')->name('articles.update');
 Route::delete('/article/{id}', 'ArticlesController@destroy')->name('articles.delete');
 
+
+Route::post('/upload/image', 'UploadController@image')->name('upload.image');
+

@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
 use App\Models\Category;
-use Gate;
+use Auth;
 
 class StoreArticleRequest extends Request
 {
@@ -15,7 +14,7 @@ class StoreArticleRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,7 +26,7 @@ class StoreArticleRequest extends Request
     {
         return [
             'category_id'       => 'required|int',
-            'title'             => 'required|mix:255|min:2',
+            'title'             => 'required|min:2|max:255',
             'original_content'  => 'required|min:2',
         ];
     }

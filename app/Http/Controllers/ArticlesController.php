@@ -40,18 +40,23 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        $categories = Auth::user()->categories();
+        $categories = Auth::user()->categories;
 
         return view('articles.create', compact('categories'));
     }
 
 
-    /**
-     * @param StoreArticleRequest $request
-     */
     public function store(StoreArticleRequest $request)
     {
+        $article = Article::create([
+            'user_id'           => Auth::id(),
+            'category_id'       => $request->get('category_id'),
+            'title'             => $request->get('title'),
+            'original_content'  => $request->get('original_content'),
+            'short_content'     => '',
+        ]);
 
+        return redirect()->route('articles.show', $article->id);
     }
 
     /**

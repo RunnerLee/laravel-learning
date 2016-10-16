@@ -6,6 +6,8 @@
     var Runner = {
         init: function() {
             this.initPjax();
+            this.initMarkdownEditor();
+            this.initFormErrorAlert();
         },
         initPjax: function() {
             $(document).pjax('a:not(a[target="_blank"])', 'body', {
@@ -22,6 +24,35 @@
                 NProgress.done();
             });
             $(document).on('pjax.click', 'a.no-pjax', false);
+        },
+        initMarkdownEditor: function() {
+            var markdownEditor = editormd({
+                id: 'article-editormd-container',
+                path: '/assets/editormd/lib/',
+                emoji: true,
+                imageUpload: true,
+                imageFormats: ['jpg', 'jpeg', 'png', 'gif'],
+                imageUploadURL: Config.routes.upload.image
+            });
+        },
+        initAjax: function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
+        },
+        initFormErrorAlert: function() {
+            if(!Config.errors) {
+                return true;
+            }
+            var formItem;
+            for(i in Config.errors) {
+                formItem = $('.form-group .form-control[name="' + Config.errors[i].name + '"]');
+                if(formItem.length > 0) {
+                    formItem.parent('.form-group').addClass('has-error');
+                }
+            }
         }
     };
 

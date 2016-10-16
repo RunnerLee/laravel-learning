@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_token" content="{{ csrf_token() }}">
 
     <title>@yield('title')</title>
 
@@ -58,6 +59,41 @@
 
 
     @yield('content')
+
+    <footer>
+        <hr>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p style="color: #666;">@RunnerLee</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+
+        var Config = {
+            user: {
+                id: '{{ Auth::id() }}',
+                name: '{{ Auth::user()->name }}'
+            },
+            routes: {
+                upload: {
+                    image: '{{ route('upload.image') }}'
+                }
+            },
+            errors: []
+        };
+
+        @foreach($errors->messages() as $key => $value)
+        Config.errors.push({
+            name: '{{ $key }}',
+            message: '{{ $value[0] }}'
+        });
+        @endforeach
+
+    </script>
 
 
     <script type="text/javascript" src="{{ elixir('assets/js/app.js') }}"></script>
