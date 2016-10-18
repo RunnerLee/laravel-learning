@@ -21,6 +21,7 @@ elixir(function(mix) {
         .copy('node_modules/font-awesome/fonts', 'public/assets/fonts/font-awesome')
         .copy('node_modules/editor.md/lib', 'public/assets/editormd/lib')
         .copy('node_modules/editor.md/plugins', 'public/assets/editormd/plugins')
+        .copy('node_modules/editor.md/images', 'public/assets/images')
         .sass([
             'base.scss',
             'app.scss'

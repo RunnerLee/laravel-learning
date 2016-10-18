@@ -25,7 +25,7 @@ class StoreArticleRequest extends Request
     public function rules()
     {
         return [
-            'category_id'       => 'required|int',
+            'category_id'       => 'required|int|exists:categories,id',
             'title'             => 'required|min:2|max:255',
             'original_content'  => 'required|min:2',
         ];

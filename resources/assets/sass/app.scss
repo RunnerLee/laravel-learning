@@ -6,25 +6,56 @@ body {
   font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
 }
 
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .fa-btn {
   margin-right: 6px;
 }
 
+.row {
+  margin: 10px 0;
+}
+
 .articles-index {
-  article ul {
-    padding-left: 0;
-  }
-  article ul li {
-    display: inline-block;
-    padding-right: 24px;
-  }
-  article div.short-content {
-    color: #666;
+
+  article {
+    margin-bottom: 30px;
+    ul {
+      li {
+        display: inline-block;
+        margin-right: 30px;
+        i {
+          padding-right: 5px;
+        }
+      }
+    }
+    .short-content {
+      a {
+        color: #333;
+      }
+    }
   }
 }
 
-ul.title-toolbar {
-  li {
-    display: inline-block;
+.articles-show {
+  ul {
+    li {
+      display: inline-block;
+      padding-right: 10px;
+    }
+  }
+}
+
+.user-show {
+  ul {
+    margin-top: 10px;
+    li {
+      margin: 10px 0;
+    }
   }
 }

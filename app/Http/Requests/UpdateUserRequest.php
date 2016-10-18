@@ -16,7 +16,7 @@ class UpdateUserRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -28,7 +28,7 @@ class UpdateUserRequest extends Request
     {
         return [
             'name' => 'required|min:2|max:16',
-            'password' => 'required|min:6|max:32|confirmed',
+            'password' => 'min:6|max:32|confirmed',
         ];
     }
 }

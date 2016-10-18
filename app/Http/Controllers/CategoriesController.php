@@ -36,7 +36,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        return view('categories.create_edit');
     }
 
 
@@ -63,10 +63,9 @@ class CategoriesController extends Controller
     public function show($id)
     {
         $category = Category::findOrFail($id);
+        $articles = $category->articles()->Recent()->paginate(10);
 
-        return view('categories.show', [
-            'articles' => $category->articles,
-        ]);
+        return view('categories.show', compact('category', 'articles'));
     }
 
 

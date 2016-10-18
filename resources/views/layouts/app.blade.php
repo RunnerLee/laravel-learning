@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="_token" content="{{ csrf_token() }}">
 
-    <title>@yield('title')</title>
+    <title>@yield('title') - DobeeBlog</title>
 
     <link rel="stylesheet" href="{{ elixir('assets/css/app.css') }}" />
 </head>
@@ -25,14 +25,14 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Cute
+                    DobeeBlog
                 </a>
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/') }}">Articles</a></li>
+                    <li></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -48,6 +48,8 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="javascript:void(0)"><span class="fa fa-btn fa-envelope"></span>Messages</a></li>
+                                <li><a href="{{ route('users.show', Auth::id()) }}"><span class="fa fa-btn fa-user"></span>Profiles</a></li>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>
@@ -61,9 +63,9 @@
     @yield('content')
 
     <footer>
-        <hr>
         <div class="container">
             <div class="row">
+                <hr>
                 <div class="col-md-12">
                     <p style="color: #666;">@RunnerLee</p>
                 </div>
@@ -75,8 +77,8 @@
 
         var Config = {
             user: {
-                id: '{{ Auth::id() }}',
-                name: '{{ Auth::user()->name }}'
+                id: '{{ Auth::check() ? Auth::id() : '' }}',
+                name: '{{ Auth::check() ? Auth::user()->name : '' }}'
             },
             routes: {
                 upload: {

@@ -10,8 +10,7 @@ class Comment extends Model
     protected $fillable = [
         'article_id',
         'user_id',
-        'comment_id',
-        'origin_content',
+        'original_content',
         'short_content',
     ];
 
@@ -31,6 +30,12 @@ class Comment extends Model
     public function scopeRecent($query)
     {
         return $query->orderBy('created_at', 'desc');
+    }
+
+
+    public function scopeByUserId($query, $userId)
+    {
+        return $query->where('user_id', $userId);
     }
 
 }

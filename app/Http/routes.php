@@ -21,13 +21,13 @@ Route::auth();
 /**
  * User
  */
-Route::get('/user/{id}', 'UserController@show')->name('users.show');
-Route::get('/user/{id}/edit', 'UserController@edit')->name('users.edit');
-Route::patch('/user/{id}', 'UserController@update')->name('users.update');
-Route::get('/user/{id}/articles', 'UserController@articles')->name('users.articles');
-Route::get('/user/{id}/comments', 'UserController@comments')->name('users.comment');
-Route::get('/user/{id}/categories', 'UserController@categories')->name('users.categories');
-Route::get('/user/{id}/favorites', 'UserController@favorites')->name('users.favorites');
+Route::get('/user/{id}', 'UsersController@show')->name('users.show');
+Route::get('/user/{id}/edit', 'UsersController@edit')->name('users.edit');
+Route::patch('/user/{id}', 'UsersController@update')->name('users.update');
+Route::get('/user/{id}/articles', 'UsersController@articles')->name('users.articles');
+Route::get('/user/{id}/comments', 'UsersController@comments')->name('users.comments');
+Route::get('/user/{id}/categories', 'UsersController@categories')->name('users.categories');
+Route::get('/user/{id}/favorites', 'UsersController@favorites')->name('users.favorites');
 
 
 /**
@@ -52,6 +52,9 @@ Route::get('/article/{id}', 'ArticlesController@show')->name('articles.show');
 Route::get('/article/{id}/edit', 'ArticlesController@edit')->name('articles.edit');
 Route::patch('/article/{id}', 'ArticlesController@update')->name('articles.update');
 Route::delete('/article/{id}', 'ArticlesController@destroy')->name('articles.delete');
+Route::post('/article/{id}/upfavorite', 'ArticlesController@upFavorite')->name('articles.upfavorite');
+Route::post('/article/{id}/downfavorite', 'ArticlesController@downFavorite')->name('articles.downfavorite');
+Route::post('/article/{id}/comment', 'ArticlesController@comment')->name('articles.comment');
 
 
 Route::post('/upload/image', 'UploadController@image')->name('upload.image');

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Favorite extends Model
 {
 
+    protected $fillable = ['user_id', 'article_id'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -17,6 +19,14 @@ class Favorite extends Model
     {
         return $this->belongsTo(Article::class);
     }
+
+
+    public function scopeByUserId($query, $userId)
+    {
+        return $query->where('user_id', $userId);
+    }
+
+
 
 
 

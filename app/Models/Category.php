@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 
 class Category extends Model
 {
+
+    use Authorizable;
 
     protected $fillable = [
         'user_id',
@@ -29,6 +32,12 @@ class Category extends Model
     public function comments()
     {
         return $this->hasManyThrough(Comment::class, Article::class);
+    }
+
+
+    public function scopeRecent($query)
+    {
+        return $query->orderBy('created_at', 'desc');
     }
 
 }

@@ -12,9 +12,9 @@ class ArticlePolicy
     use HandlesAuthorization;
 
 
-    public function create(User $user, Category $category)
+    public function update(User $user, Article $article)
     {
-        return $user->id === $category->user_id;
+        return $user->id == $article->user_id;
     }
 
 
