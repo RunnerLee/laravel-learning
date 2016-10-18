@@ -13,6 +13,7 @@
                     <li><a href="{{ route('users.categories', $user->id) }}">Categories</a></li>
                     @if($user->id == Auth::id())
                     <li><a href="{{ route('users.edit', $user->id) }}">Profiles</a></li>
+                    <li><a href="{{ route('users.notifications', $user->id) }}">Messages</a></li>
                     @endif
                 </ul>
             </div>

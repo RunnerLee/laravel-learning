@@ -6,7 +6,6 @@ use App\Http\Requests\StoreCategoriesRequest;
 use App\Models\Article;
 use App\Models\Category;
 use Auth;
-use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
@@ -57,7 +56,7 @@ class CategoriesController extends Controller
 
 
     /**
-     * @param $id
+     * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
@@ -70,7 +69,7 @@ class CategoriesController extends Controller
 
 
     /**
-     * @param $id
+     * @param int $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
@@ -84,7 +83,7 @@ class CategoriesController extends Controller
 
     /**
      * @param StoreCategoriesRequest $request
-     * @param $id
+     * @param int $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(StoreCategoriesRequest $request, $id)
@@ -101,17 +100,20 @@ class CategoriesController extends Controller
 
 
     /**
-     * @param $id
+     * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
+
         $this->authorize('delete', $category);
 
         Article::where('category_id', $id)->delete();
         $category->delete();
 
-        return redirect()->route('users.categories', Auth::id());
+        return response()->json([
+            'status' => 200,
+        ]);
     }
 }

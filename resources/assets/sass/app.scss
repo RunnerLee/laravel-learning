@@ -21,8 +21,18 @@ ul {
   margin: 10px 0;
 }
 
-.articles-index {
+.color-red {
+  color: #b22411;
+}
 
+ul.toolbar {
+  li {
+    display: inline-block;
+    padding-right: 10px;
+  }
+}
+
+.articles-index {
   article {
     margin-bottom: 30px;
     ul {
@@ -42,15 +52,6 @@ ul {
   }
 }
 
-.articles-show {
-  ul {
-    li {
-      display: inline-block;
-      padding-right: 10px;
-    }
-  }
-}
-
 .user-show {
   ul {
     margin-top: 10px;
@@ -58,4 +59,8 @@ ul {
       margin: 10px 0;
     }
   }
+}
+
+footer {
+  color: #666;
 }

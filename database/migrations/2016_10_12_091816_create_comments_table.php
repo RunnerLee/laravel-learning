@@ -18,6 +18,7 @@ class CreateCommentsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->text('original_content');
             $table->string('short_content');
+            $table->string('compiled_content');
             $table->enum('is_disabled', ['yes', 'no'])->default('no');
 
             $table->softDeletes();

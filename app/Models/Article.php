@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 
 class Article extends Model
 {
 
-    use Authorizable;
+    use Authorizable, SoftDeletes;
 
     protected $fillable = [
         'user_id',
@@ -27,7 +28,7 @@ class Article extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->withTrashed()->Recent();
     }
 
 

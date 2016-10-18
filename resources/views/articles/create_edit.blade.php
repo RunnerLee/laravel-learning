@@ -13,7 +13,7 @@
             {!! csrf_field() !!}
             <div class="row">
 
-                <div class="col-md-12 form-group" style="margin-bottom: 20px;">
+                <div class="col-md-12 form-group">
                     <select class="form-control" name="category_id">
                         <option disabled selected>选择分类</option>
                         @foreach($categories as $category)
@@ -33,15 +33,13 @@
                 @endif
 
 
-                <div class="col-md-12 form-group" style="height: 480px; margin: 20px 0;">
+                <div class="col-md-12 form-group" style="height: 480px;">
 
                     <div id="article-editormd-container">
                         <textarea style="display:none;" name="original_content" id="article-original-content">{{ isset($article) ? $article->original_content : '' }}</textarea>
                     </div>
 
                 </div>
-
-
 
                 <div class="col-md-12">
                     <input type="submit" value="submit" class="btn btn-primary">

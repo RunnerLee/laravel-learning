@@ -4,30 +4,45 @@
 (function($) {
 
     var Runner = {
+
+        // init page
         init: function() {
             this.initPjax();
+            this.bootstrap();
+        },
+
+        // start pjax
+        initPjax: function() {
+            var self = this;
+            $(document).pjax('a:not(a[target="_blank"]):not([data-ajax]):not(.no-pjax)', 'body', {
+                timeout: 1500
+            });
+
+            // start -> complete -> end
+            $(document).on('pjax:start', function() {
+                NProgress.start();
+                console.log('pjax start');
+            });
+            $(document).on('pjax:complete', function() {
+                NProgress.done();
+                console.log('pjax complete');
+            });
+            $(document).on('pjax:end', function() {
+                NProgress.done();
+                console.log('pjax end');
+                self.bootstrap();
+            });
+        },
+
+        // bootstrap application
+        bootstrap: function() {
             this.initMarkdownEditor();
             this.initFormErrorAlert();
             this.initAjax();
             this.initSubmitButtonLock();
         },
-        initPjax: function() {
-            $(document).pjax('a:not(a[target="_blank"])', 'body', {
-                timeout: 1500
-            });
-            $(document).on('pjax:start', function() {
-                NProgress.start();
-            });
 
-            $(document).on('pjax:complete', function() {
-                NProgress.done();
-            });
-            $(document).on('pjax:end', function() {
-                NProgress.done();
-            });
-            $(document).on('pjax.click', 'a.no-pjax', false);
-            $(document).on('pjax.click', 'a[data-ajax]', false);
-        },
+        // init markdown editor
         initMarkdownEditor: function() {
             if($('#article-editormd-container').length == 0) {
                 return false;
@@ -39,9 +54,12 @@
                 imageUpload: true,
                 imageFormats: ['jpg', 'jpeg', 'png', 'gif'],
                 imageUploadURL: Config.routes.upload.image,
-                placeholder: 'write with markdown, have fun..'
+                placeholder: 'write with markdown, have fun..',
+                authHeight: true
             });
         },
+
+        // init ajax setting
         initAjax: function() {
             $.ajaxSetup({
                 headers: {
@@ -53,23 +71,31 @@
                     window.location.href = '/login';
                     return false;
                 }
+
                 var that = $(this),
                     method = that.data('ajax'),
-                    target = that.data('url');
+                    target = that.data('url'),
+                    redirectUrl = that.data('redirect');
 
                 $.ajax({
                     type: method,
                     url: target,
                     dataType: 'json',
                     success: function(json) {
-                        alert(json);
+                        if('DELETE' == method) {
+                            window.location.href = redirectUrl;
+                        }else {
+                            window.location.reload();
+                        }
                     },
                     error: function(response) {
-                        alert('失败');
+                        alert('fail');
                     }
                 });
             });
         },
+
+        // init form error alert
         initFormErrorAlert: function() {
             if(!Config.errors) {
                 return true;
@@ -82,6 +108,7 @@
                 }
             }
         },
+
         initSubmitButtonLock: function() {
             $('input[type=submit]').click(function() {
                 $(this).val('submitting..').disabled();

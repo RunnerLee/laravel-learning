@@ -9,6 +9,9 @@ use Auth;
 class UsersController extends Controller
 {
 
+    /**
+     * UsersController constructor.
+     */
     public function __construct()
     {
         $this->middleware('auth', [
@@ -18,8 +21,6 @@ class UsersController extends Controller
 
 
     /**
-     * Display the specified resource.
-     *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
@@ -35,8 +36,6 @@ class UsersController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
@@ -52,6 +51,11 @@ class UsersController extends Controller
     }
 
 
+    /**
+     * @param UpdateUserRequest $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function update(UpdateUserRequest $request, $id)
     {
         if ($id != Auth::user()->id) {
@@ -77,6 +81,10 @@ class UsersController extends Controller
     }
 
 
+    /**
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function articles($id)
     {
         $user = User::findOrFail($id);
@@ -88,6 +96,10 @@ class UsersController extends Controller
     }
 
 
+    /**
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function comments($id)
     {
         $user = User::findOrFail($id);
@@ -97,6 +109,10 @@ class UsersController extends Controller
     }
 
 
+    /**
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function favorites($id)
     {
         $user = User::findOrFail($id);
@@ -108,6 +124,10 @@ class UsersController extends Controller
     }
 
 
+    /**
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function categories($id)
     {
         $user = User::findOrFail($id);
@@ -117,9 +137,5 @@ class UsersController extends Controller
             'user' => $user
         ]);
     }
-
-
-
-
 
 }

@@ -6696,7 +6696,7 @@ $.support.pjax ? enable() : disable()
         // start pjax
         initPjax: function() {
             var self = this;
-            $(document).pjax('a:not(a[target="_blank"]):not([data-ajax]):not(.no-pjax)', 'body', {
+            $(document).pjax('a:not(a[target="_blank"])', 'body', {
                 timeout: 1500
             });
 
@@ -6714,6 +6714,9 @@ $.support.pjax ? enable() : disable()
                 console.log('pjax end');
                 self.bootstrap();
             });
+
+            $(document).on('pjax.click', 'a.no-pjax', false);
+            // $(document).on('pjax.click', 'a[data-ajax]', false);
         },
 
         // bootstrap application
@@ -6753,25 +6756,19 @@ $.support.pjax ? enable() : disable()
                     window.location.href = '/login';
                     return false;
                 }
-
                 var that = $(this),
                     method = that.data('ajax'),
-                    target = that.data('url'),
-                    redirectUrl = that.data('redirect');
+                    target = that.data('url');
 
                 $.ajax({
                     type: method,
                     url: target,
                     dataType: 'json',
                     success: function(json) {
-                        if('DELETE' == method) {
-                            window.location.href = redirectUrl;
-                        }else {
-                            window.location.reload();
-                        }
+                        alert(json);
                     },
                     error: function(response) {
-                        alert('fail');
+                        alert('失败');
                     }
                 });
             });
@@ -6790,7 +6787,6 @@ $.support.pjax ? enable() : disable()
                 }
             }
         },
-
         initSubmitButtonLock: function() {
             $('input[type=submit]').click(function() {
                 $(this).val('submitting..').disabled();

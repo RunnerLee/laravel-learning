@@ -16,9 +16,10 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
+            $table->integer('notification_count')->unsigned()->default(0);
+
             $table->enum('is_disabled', ['yes', 'no'])->default('no');
             $table->string('password');
-
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

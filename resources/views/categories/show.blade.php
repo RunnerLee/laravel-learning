@@ -10,6 +10,11 @@
 
                 <h1>{{ $category->name }}</h1>
 
+                <ul class="toolbar">
+                    <li><a href="{{ route('categories.edit', $category->id) }}">修改</a></li>
+                    <li><a href="javascript:void(0)" data-ajax="DELETE" data-url="{{ route('categories.destroy', $category->id) }}" data-redirect="{{ route('articles.index') }}">删除</a></li>
+                </ul>
+
                 <hr>
                 @foreach($articles as $article)
 

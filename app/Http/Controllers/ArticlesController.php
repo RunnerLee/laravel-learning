@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArticleRequest;
+use App\Http\Requests\StoreCommentRequest;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Comment;
-use Illuminate\Http\Request;
 use Auth;
-use Gate;
 
 class ArticlesController extends Controller
 {
@@ -47,8 +46,14 @@ class ArticlesController extends Controller
     }
 
 
+    /**
+     * @param StoreArticleRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(StoreArticleRequest $request)
     {
+        $this->authorize('have', Category::find($request->input('category_id')));
+
         $article = Article::create([
             'user_id'           => Auth::id(),
             'category_id'       => $request->input('category_id'),
@@ -62,30 +67,36 @@ class ArticlesController extends Controller
         return redirect()->route('articles.show', $article->id);
     }
 
+
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
         $article = Article::with('user', 'comments')->findOrFail($id);
 
+        $isCollected = false;
+
+        if(Auth::check() && $article->collectors()->find(Auth::id())) {
+            $isCollected = true;
+        }
+
         $article->increment('view_count', 1);
 
-        return view('articles.show', compact('article'));
+        return view('articles.show', compact('article', 'isCollected'));
     }
 
+
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
         $article = Article::findOrFail($id);
+        $this->authorize('update', $article);
+
         $categories = Auth::user()->categories;
 
         return view('articles.create_edit', compact('article', 'categories'));
@@ -117,6 +128,10 @@ class ArticlesController extends Controller
     }
 
 
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function upFavorite($id)
     {
         $article = Article::findOrFail($id);
@@ -129,7 +144,6 @@ class ArticlesController extends Controller
                 'user_id' => Auth::id(),
                 'article_id' => $id,
             ]);
-            $article->increment('favorite_count', 1);
         }
 
         return response()->json([
@@ -138,13 +152,16 @@ class ArticlesController extends Controller
     }
 
 
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function downFavorite($id)
     {
         $article = Article::findOrFail($id);
 
         if($favorite = $article->favorites()->ByUserId(Auth::id())->first()) {
             $favorite->delete();
-            $article->decrement('favorite_count', 1);
         }
 
         return response()->json([
@@ -153,7 +170,12 @@ class ArticlesController extends Controller
     }
 
 
-    public function comment(Request $request, $id)
+    /**
+     * @param StoreCommentRequest $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function comment(StoreCommentRequest $request, $id)
     {
         $this->validate($request, [
             'original_content' => 'required|min:6',
@@ -168,23 +190,23 @@ class ArticlesController extends Controller
             abort(403);
         }
 
-        Comment::create([
+        $data = [
             'user_id' => Auth::id(),
             'article_id' => $id,
             'original_content' => $request->input('original_content'),
-            'short_content' => convert_markdown_to_pure($request->input('original_content'), 20),
-        ]);
+            'compiled_content' => convert_markdown_to_html($request->input('original_content')),
+        ];
+        $data['short_content'] = mb_substr(strip_tags($data['compiled_content']), 0, 20);
+
+        Comment::create($data);
 
         return redirect()->route('articles.show', $id);
     }
 
 
-
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
@@ -192,10 +214,14 @@ class ArticlesController extends Controller
 
         $this->authorize('delete', $article);
 
-        $article->category->decrement('articles_count', 1);
+        $article->category->decrement('article_count', 1);
+
+        $article->comments()->delete();
 
         $article->delete();
 
-        return redirect()->route('users.articles', Auth::id());
+        return response()->json([
+            'status' => 200,
+        ]);
     }
 }

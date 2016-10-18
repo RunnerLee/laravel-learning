@@ -29,33 +29,57 @@ class User extends Authenticatable
     ];
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function articles()
     {
         return $this->hasMany(Article::class);
     }
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function categories()
     {
         return $this->hasMany(Category::class);
     }
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
 
 
+    /**
+     * @return Comment
+     */
     public function latestComment()
     {
         return $this->comments->recent()->first();
     }
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function favoriteArticles()
     {
         return $this->belongsToMany(Article::class, 'favorites');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function notification()
+    {
+        return $this->hasMany(Notification::class)->Recent();
     }
 
 

@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Category;
-use Auth;
+use App\Http\Requests\Request;
 
-class StoreArticleRequest extends Request
+class StoreCommentRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +24,7 @@ class StoreArticleRequest extends Request
     public function rules()
     {
         return [
-            'category_id'       => 'required|int|exists:categories,id',
-            'title'             => 'required|min:2|max:100',
-            'original_content'  => 'required|min:2',
+            'original_content' => 'required|min:6',
         ];
     }
 }

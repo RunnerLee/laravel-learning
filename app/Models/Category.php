@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 
 class Category extends Model
 {
 
-    use Authorizable;
+    use Authorizable, SoftDeletes;
 
     protected $fillable = [
         'user_id',

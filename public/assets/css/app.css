@@ -11401,6 +11401,13 @@ ul {
 .row {
   margin: 10px 0; }
 
+.color-red {
+  color: #b22411; }
+
+ul.toolbar li {
+  display: inline-block;
+  padding-right: 10px; }
+
 .articles-index article {
   margin-bottom: 30px; }
   .articles-index article ul li {
@@ -11411,13 +11418,12 @@ ul {
   .articles-index article .short-content a {
     color: #333; }
 
-.articles-show ul li {
-  display: inline-block;
-  padding-right: 10px; }
-
 .user-show ul {
   margin-top: 10px; }
   .user-show ul li {
     margin: 10px 0; }
+
+footer {
+  color: #666; }
 
 /*# sourceMappingURL=app.css.map */

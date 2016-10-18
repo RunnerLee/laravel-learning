@@ -6757,7 +6757,10 @@ $.support.pjax ? enable() : disable()
                 var that = $(this),
                     method = that.data('ajax'),
                     target = that.data('url'),
-                    redirectUrl = that.data('redirect');
+                    redirectUrl = that.data('redirect'),
+                    message = that.data('message');
+
+                alert(message);
 
                 $.ajax({
                     type: method,
@@ -6767,11 +6770,11 @@ $.support.pjax ? enable() : disable()
                         if('DELETE' == method) {
                             window.location.href = redirectUrl;
                         }else {
-                            window.location.reload();
+                            that.val(message);
                         }
                     },
                     error: function(response) {
-                        alert('fail');
+                        alert('失败');
                     }
                 });
             });

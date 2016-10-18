@@ -11,6 +11,13 @@ class CategoryPolice
     use HandlesAuthorization;
 
 
+
+    public function have(User $user, Category $category)
+    {
+        return $user->id === $category->user_id;
+    }
+
+
     public function update(User $user, Category $category)
     {
         return $user->id === $category->user_id;
