@@ -161,11 +161,6 @@ return [
          */
         \GrahamCampbell\Markdown\MarkdownServiceProvider::class,
 
-        /**
-         * auto data seed service provider
-         */
-        \Orangehill\Iseed\IseedServiceProvider::class,
-
     ],
 
     /*
