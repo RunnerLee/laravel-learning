@@ -62,9 +62,6 @@
                 uploadUrl: Config.routes.upload.image,
                 extraParams: {
                     '_token': $('meta[name=_token]').attr('content')
-                },
-                onUploadedFile: function(response) {
-                    alert(123);
                 }
             });
             
