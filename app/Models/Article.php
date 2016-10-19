@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -18,6 +19,17 @@ class Article extends Model
         'original_content',
         'short_content',
     ];
+
+
+    public static function boot()
+    {
+        parent::boot();
+        self::created(function($article) {
+            $article->category->update([
+                'last_article_at' => Carbon::now(),
+            ]);
+        });
+    }
 
 
     public function user()
@@ -58,13 +70,7 @@ class Article extends Model
 
     public function getArticles($limit)
     {
-        return $this->withoutDisabled()->Recent()->with('user', 'latestComment')->paginate($limit);
-    }
-
-
-    public function scopeWithoutDisabled($query)
-    {
-        return $query->where('is_disabled', 'no');
+        return $this->Recent()->with('user', 'latestComment')->paginate($limit);
     }
 
 

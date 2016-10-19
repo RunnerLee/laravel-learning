@@ -9,9 +9,8 @@ var basejs = [
     './resources/assets/js/vendor/bootstrap.min.js',
     './resources/assets/js/vendor/jquery.pjax.js',
     './resources/assets/js/vendor/nprogress.js',
-    './resources/assets/js/vendor/jquery.inline-attach.min.js',
-    './resources/assets/js/vendor/bootstrap-switch.js',
-    './node_modules/editor.md/src/editormd.js'
+    './resources/assets/js/vendor/simplemde.min.js',
+    './resources/assets/js/vendor/codemirror-4.inline-attachment.js'
 ];
 
 
@@ -19,13 +18,10 @@ elixir(function(mix) {
     mix
         .copy('node_modules/bootstrap-sass/assets/fonts/bootstrap', 'public/assets/fonts/bootstrap')
         .copy('node_modules/font-awesome/fonts', 'public/assets/fonts/font-awesome')
-        .copy('node_modules/editor.md/lib', 'public/assets/editormd/lib')
-        .copy('node_modules/editor.md/plugins', 'public/assets/editormd/plugins')
-        .copy('node_modules/editor.md/images', 'public/assets/images')
         .sass([
             'base.scss',
             'app.scss'
-        ], 'public/assets/css/app.css')
+        ].concat(['vendor/simplemde.min.css']), 'public/assets/css/app.css')
         .scripts(basejs.concat(['resources/assets/js/app.js']), 'public/assets/js/app.js', './')
         .version([
             'assets/js/app.js',

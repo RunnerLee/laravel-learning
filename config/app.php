@@ -156,7 +156,15 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /**
+         * markdown service provider
+         */
         \GrahamCampbell\Markdown\MarkdownServiceProvider::class,
+
+        /**
+         * auto data seed service provider
+         */
+        \Orangehill\Iseed\IseedServiceProvider::class,
 
     ],
 

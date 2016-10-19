@@ -44,18 +44,32 @@
 
         // init markdown editor
         initMarkdownEditor: function() {
-            if($('#article-editormd-container').length == 0) {
+            if($('#article-original-content').length == 0) {
                 return false;
             }
-            var markdownEditor = editormd({
-                id: 'article-editormd-container',
-                path: '/assets/editormd/lib/',
-                emoji: true,
-                imageUpload: true,
-                imageFormats: ['jpg', 'jpeg', 'png', 'gif'],
-                imageUploadURL: Config.routes.upload.image,
-                placeholder: 'write with markdown, have fun..',
-                authHeight: true
+            var markdownEditor = new SimpleMDE({
+                element: document.getElementById('article-original-content'),
+                autoDownloadFontAwesome: false,
+                indentWithTabs: false,
+                placeholder: 'write with markdown..',
+                showIcons: ['code', 'table'],
+                hideIcons: ['guide'],
+                tabSize: 4,
+                spellChecker: false
+            });
+
+            inlineAttachment.editors.codemirror4.attach(markdownEditor.codemirror, {
+                uploadUrl: Config.routes.upload.image,
+                extraParams: {
+                    '_token': $('meta[name=_token]').attr('content')
+                },
+                onUploadedFile: function(response) {
+                    alert(123);
+                }
+            });
+            
+            markdownEditor.codemirror.on('paste', function(codemirror, event) {
+                console.log(codemirror, event);
             });
         },
 

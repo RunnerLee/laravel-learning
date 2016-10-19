@@ -22,7 +22,6 @@ class CreateArticlesTable extends Migration
             $table->integer('comment_count')->default(0);
             $table->integer('favorite_count')->default(0);
             $table->integer('view_count')->default(0);
-            $table->enum('is_disabled', ['yes', 'no'])->default('no');
             $table->softDeletes();
             $table->timestamps();
         });

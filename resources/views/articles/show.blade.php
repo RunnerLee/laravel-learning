@@ -57,8 +57,8 @@
             @endforeach
             </div>
 
-            @if(Auth::check())
             <div class="col-md-8">
+                @if(Auth::check())
                 <form id="comment-form" method="POST" action="{{ route('articles.comment', $article->id) }}">
                     <div class="form-group">
                         <textarea class="form-control" style="height: 100px;" placeholder="请输入回复内容，支持 Markdown" name="original_content"></textarea>
@@ -67,8 +67,17 @@
                         <input type="submit" value="submit" class="btn btn-primary">
                     </div>
                 </form>
+                @else
+                    <form>
+                        <div class="form-group">
+                            <textarea class="form-control" style="height: 100px;" disabled>can not comment when not logged in</textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="submit" class="btn btn-primary" disabled>
+                        </div>
+                    </form>
+                @endif
             </div>
-            @endif
         </div>
 
 

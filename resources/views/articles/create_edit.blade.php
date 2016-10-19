@@ -33,12 +33,8 @@
                 @endif
 
 
-                <div class="col-md-12 form-group" style="height: 480px;">
-
-                    <div id="article-editormd-container">
-                        <textarea style="display:none;" name="original_content" id="article-original-content">{{ isset($article) ? $article->original_content : '' }}</textarea>
-                    </div>
-
+                <div class="col-md-12 form-group" style="">
+                        <textarea name="original_content" id="article-original-content">{{ isset($article) ? $article->original_content : '' }}</textarea>
                 </div>
 
                 <div class="col-md-12">
