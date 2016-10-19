@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -26,7 +25,7 @@ class Article extends Model
         parent::boot();
         self::created(function($article) {
             $article->category->update([
-                'last_article_at' => Carbon::now(),
+                'last_article_at' => $article->create_at,
             ]);
         });
     }
