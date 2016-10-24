@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->string('name')->index();
             $table->string('title')->nullable()->index();
-            $table->integer('articles_count')->default(0);
+            $table->integer('article_count')->default(0);
             $table->timestamp('last_article_at')->nullable();
 
             $table->softDeletes();

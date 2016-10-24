@@ -18,6 +18,7 @@ class CreateNotificationsTable extends Migration
             $table->integer('from_user_id')->index();
             $table->integer('article_id')->default(0);
             $table->integer('comment_id')->default(0);
+            $table->string('content')->nullable();
             $table->string('type')->index();
             $table->timestamps();
         });

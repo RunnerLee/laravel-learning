@@ -60,6 +60,7 @@
             <div class="col-md-8">
                 @if(Auth::check())
                 <form id="comment-form" method="POST" action="{{ route('articles.comment', $article->id) }}">
+                    {{ csrf_field() }}
                     <div class="form-group">
                         <textarea class="form-control" style="height: 100px;" placeholder="请输入回复内容，支持 Markdown" name="original_content"></textarea>
                     </div>
