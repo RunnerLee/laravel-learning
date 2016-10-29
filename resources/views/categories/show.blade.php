@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Category - ' . $category->name)
+@section('title', $category->name . ' - Categories')
 @section('content')
 
     <div class="container">

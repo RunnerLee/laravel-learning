@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Revisionable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -9,7 +10,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 class Article extends Model
 {
 
-    use Authorizable, SoftDeletes;
+    use Authorizable, SoftDeletes, Revisionable;
 
     protected $fillable = [
         'user_id',
@@ -19,6 +20,8 @@ class Article extends Model
         'short_content',
     ];
 
+    protected $dates = ['deleted_at'];
+
 
     public static function boot()
     {
@@ -27,6 +30,10 @@ class Article extends Model
             $article->category->update([
                 'last_article_at' => $article->create_at,
             ]);
+        });
+        self::deleted(function($article) {
+            $article->category->decrement('article_count', 1);
+            $article->comments()->delete();
         });
     }
 

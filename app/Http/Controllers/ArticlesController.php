@@ -214,10 +214,6 @@ class ArticlesController extends Controller
 
         $this->authorize('delete', $article);
 
-        $article->category->decrement('article_count', 1);
-
-        $article->comments()->delete();
-
         $article->delete();
 
         return response()->json([

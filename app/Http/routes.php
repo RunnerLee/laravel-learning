@@ -58,3 +58,5 @@ Route::group([
 
 
 Route::get('/notifications', 'NotificationsController@index')->name('notifications.index')->middleware('auth');
+
+Route::get('/logs', 'LogsController@index');
